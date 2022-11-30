@@ -1,3 +1,5 @@
 https://open.spotify.com/artist/3inCNiUr4R6XQ3W43s9Aqi?si=ZysWldN2S2WtSqn00pBP6g
 
 https://developer.spotify.com/documentation/web-api/
+
+https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-artist

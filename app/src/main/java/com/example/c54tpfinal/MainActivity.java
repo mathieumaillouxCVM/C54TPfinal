@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,35 +24,38 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView testInfo;
-    String url;
+    TextView champTest;
+    String urlPavement;
     SingletonVolley sg;
     JsonObjectRequest jsonRequest;
-    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        testInfo = findViewById(R.id.testInfo);
+        champTest = findViewById(R.id.champTest);
+
         sg = SingletonVolley.getInstance(MainActivity.this);
         SharedPreferences shPref = getApplicationContext().getSharedPreferences("SPOTIFY", 0);
 
-        url = "https://open.spotify.com/artist/3inCNiUr4R6XQ3W43s9Aqi?si=ZysWldN2S2WtSqn00pBP6g";
+        urlPavement = "https://api.spotify.com/v1/artists/3inCNiUr4R6XQ3W43s9Aqi";
 
         jsonRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                url,
+                urlPavement,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray array = response.getJSONArray("artist");
-                            testInfo.setText(array.getString(0));
+                            String str = response.getString("name");
+                            Toast.makeText(MainActivity.this, str, Toast.LENGTH_LONG).show();
+
                         } catch (JSONException jsonException)
                         {
+
+                            Toast.makeText(MainActivity.this, "error", Toast.LENGTH_LONG).show();
                             jsonException.printStackTrace();
                         }
                     }
@@ -68,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                         return headers;
                     }
                 };
-
 
         sg.addToRequestQueue(jsonRequest);
     }

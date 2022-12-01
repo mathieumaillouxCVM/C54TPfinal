@@ -64,11 +64,10 @@ public class MainActivity extends AppCompatActivity {
                             imageUrl = imageObj.getString("url");
 
 
-
                             int width = imageObj.getInt("width");
                             int height = imageObj.getInt("height");
 
-                            
+
                             imageTest.setImageUrl(imageUrl, imgLoader);
 
 

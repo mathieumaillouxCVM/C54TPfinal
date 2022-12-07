@@ -1,8 +1,10 @@
 package com.example.c54tpfinal;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
@@ -16,24 +18,32 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GenericRequest {
+public class GenericRequest{
 
     private JsonRequest jsonRequest;
-    private String url;
     private JSONObject jsonObjectResponse;
+    private Context context;
 
-    public GenericRequest(String url) {
-        this.url = url;
+    public GenericRequest(Context context) {
+        this.context = context;
+    }
 
+    public void createRequest(String url) {
         this.jsonRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response); // For test in console
-                        jsonObjectResponse = response;
+                    public void onResponse(JSONObject response)  {
+                            ((MainActivity)context).updateInfo(response);
+//                        try {
+//                            String name = response.getString("name");
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        System.out.println(response); // For test in console
+//                        jsonObjectResponse = response;
                     }
                 }, null)
 
@@ -41,7 +51,7 @@ public class GenericRequest {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                Context sharedPreferences;
+                SharedPreferences shPref = context.getSharedPreferences("SPOTIFY", 0);
                 String token = shPref.getString("token", "");
                 String auth = "Bearer " + token;
                 headers.put("Authorization", auth);
@@ -50,10 +60,17 @@ public class GenericRequest {
             }
 
         };
+        SingletonVolley.getInstance(context).addToRequestQueue(this.jsonRequest);
     }
 
-    public JSONObject getJsonObjectResponse() {
-        return jsonObjectResponse;
-    }
-    
+
+//
+//    public JsonRequest getJsonRequest() {
+//        return jsonRequest;
+//    }
+//
+//    public JSONObject getJsonObjectResponse() {
+//        return jsonObjectResponse;
+//    }
+
 }

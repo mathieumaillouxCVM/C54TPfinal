@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     String imageUrl;
     ImageLoader imgLoader;
     NetworkImageView imageTest;
+    JSONObject response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,54 +45,79 @@ public class MainActivity extends AppCompatActivity {
         champTest = findViewById(R.id.champTest);
         imageTest = findViewById(R.id.imageTest);
 
-        SharedPreferences shPref = getApplicationContext().getSharedPreferences("SPOTIFY", 0);
-
-        sg = SingletonVolley.getInstance(MainActivity.this);
-        imgLoader = sg.getImageLoader();
 
         urlPavement = "https://api.spotify.com/v1/artists/3inCNiUr4R6XQ3W43s9Aqi";
 
-        jsonRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                urlPavement,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response);
-                        try {
-                            JSONArray imageArr = response.getJSONArray("images");
-                            JSONObject imageObj = imageArr.getJSONObject(0);
-                            imageUrl = imageObj.getString("url");
+        GenericRequest requestPavement = new GenericRequest(this);
+        requestPavement.createRequest(urlPavement);
+
+//        SharedPreferences shPref = getApplicationContext().getSharedPreferences("SPOTIFY", 0);
 
 
-                            int width = imageObj.getInt("width");
-                            int height = imageObj.getInt("height");
+//        sg = SingletonVolley.getInstance(this);
+//        imgLoader = sg.getImageLoader();
+//
+//        imageTest.setImageUrl(imageUrl, imgLoader);
+//
+//        JSONArray imageArr = null;
+//        try {
+//            imageArr = response.getJSONArray("images");
+//            JSONObject imageObj = imageArr.getJSONObject(0);
+//            imageUrl = imageObj.getString("url");
+//           // int width = imageObj.getInt("width");
+//           // int height = imageObj.getInt("height");
+//            imageTest.setImageUrl(imageUrl, imgLoader);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
 
-                            imageTest.setImageUrl(imageUrl, imgLoader);
 
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-//                          // JSONArray imagesArr = response.getJSONArray("images");
-                    }
-                }, null)
-                {
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> headers = new HashMap<>();
-                        Context sharedPreferences;
-                        String token = shPref.getString("token", "");
-                        String auth = "Bearer " + token;
-                        headers.put("Authorization", auth);
-                        headers.put("Content-Type", "application/json; charset=utf-8");
-                        return headers;
-                    }
-                };
+//        jsonRequest = new JsonObjectRequest(
+//                Request.Method.GET,
+//                urlPavement,
+//                null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        System.out.println(response);
+//                        try {
+//                            JSONArray imageArr = response.getJSONArray("images");
+//                            JSONObject imageObj = imageArr.getJSONObject(0);
+//                            imageUrl = imageObj.getString("url");
+//
+//
+//                            int width = imageObj.getInt("width");
+//                            int height = imageObj.getInt("height");
+//
+//
+//                            imageTest.setImageUrl(imageUrl, imgLoader);
+//
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+////                          // JSONArray imagesArr = response.getJSONArray("images");
+//                    }
+//                }, null)
+//                {
+//                    @Override
+//                    public Map<String, String> getHeaders() throws AuthFailureError {
+//                        Map<String, String> headers = new HashMap<>();
+//                        Context sharedPreferences;
+//                        String token = shPref.getString("token", "");
+//                        String auth = "Bearer " + token;
+//                        headers.put("Authorization", auth);
+//                        headers.put("Content-Type", "application/json; charset=utf-8");
+//                        return headers;
+//                    }
+//                };
 
-        sg.addToRequestQueue(jsonRequest);
+
+    }
+    public void updateInfo (JSONObject jsOb) {
+        System.out.println(jsOb);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.c54tpfinal;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
@@ -14,9 +15,11 @@ public class SingletonVolley {
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
     private static Context ctx;
+    private static SharedPreferences sharedPreferences;
 
     private SingletonVolley(Context context) {
         ctx = context;
+        sharedPreferences = ctx.getSharedPreferences("SPOTIFY", 0);
         requestQueue = getRequestQueue();
 
         imageLoader = new ImageLoader(requestQueue,

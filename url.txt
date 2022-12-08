@@ -1,0 +1,14 @@
+https://open.spotify.com/artist/3inCNiUr4R6XQ3W43s9Aqi?si=ZysWldN2S2WtSqn00pBP6g
+
+https://developer.spotify.com/documentation/web-api/
+
+https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-artist
+
+
+
+Pavement
+https://open.spotify.com/artist/3inCNiUr4R6XQ3W43s9Aqi?si=yt1xOSibRzKoHh_RyUPMzw
+Radiohead
+https://open.spotify.com/artist/4Z8W4fKeB5YxbusRsdQVPb?si=oEIUGPFLThCg9RgryopFjA
+Nirvana
+https://open.spotify.com/artist/6olE6TJLqED3rqDCT0FyPh?si=BemyRhnbTniBfD6Q1ScKyQ

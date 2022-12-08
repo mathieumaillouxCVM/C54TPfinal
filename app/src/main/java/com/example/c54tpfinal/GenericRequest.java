@@ -36,7 +36,7 @@ public class GenericRequest{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response)  {
-                            ((MainActivity)context).updateInfo(response);
+                            ((MainActivity)context).getResponse(response);
 //                        try {
 //                            String name = response.getString("name");
 //                        } catch (JSONException e) {

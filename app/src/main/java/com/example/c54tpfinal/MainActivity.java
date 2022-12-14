@@ -2,155 +2,178 @@ package com.example.c54tpfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.animation.ObjectAnimator;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.SQLOutput;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView champTest;
-    String urlArtistPavement, urlArtistNirvana, urlArtistRadiohead, imageUrl;
-    SingletonVolley sg;
-    ImageLoader imgLoader;
-    NetworkImageView img1, img2;
-    JSONObject response;
-    Vector<JSONObject> collectedResponse;
+    //    TextView question1Titre;
+//    ImageView drumSticks;
+//    Button btnArtist1, btnArtist2;
+//    SingletonVolley sg;
+//    ImageLoader imgLoader;
+//    NetworkImageView img1, img2;
+//    Vector<JSONObject> collectedResponse;
+//    Question1Urls q1Url;
+    Ecouteur ec;
+//    int popularity1, popularity2, score;
+//    float wid, fromX, toX;
+    Button btnDemarrer;
+    int score;
+    float fromX, toX;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-                champTest = findViewById(R.id.champTest);
-                img1 = findViewById(R.id.img1);
-                img2= findViewById(R.id.img2);
+        score = 0;
+        fromX = 0;
+        toX = 0;
 
-                urlArtistPavement = "https://api.spotify.com/v1/artists/3inCNiUr4R6XQ3W43s9Aqi";
-                urlArtistNirvana = "https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb";
-                urlArtistRadiohead = "https://api.spotify.com/v1/artists/6olE6TJLqED3rqDCT0FyPh";
+        btnDemarrer = findViewById(R.id.btnDemarrer);
 
-                collectedResponse = new Vector<JSONObject>();
+        ec = new Ecouteur();
 
-                GenericRequest requestPavement = new GenericRequest(this);
-                requestPavement.createRequest(urlArtistPavement);
-                GenericRequest requestNirvana = new GenericRequest(this);
-                requestNirvana.createRequest(urlArtistNirvana);
-                GenericRequest requestRadiohead = new GenericRequest(this);
-                requestRadiohead.createRequest(urlArtistRadiohead);
+        btnDemarrer.setOnClickListener(ec);
+
+//        btnDemarrer.setOnClickListener((btn) -> {
+//            Intent intent = new Intent(MainActivity.this, Question1Activity.class);
+//            intent.putExtra("SCORE", score);
+//            intent.putExtra("FROM_X", fromX);
+//            intent.putExtra("TO_X", toX);
+//            startActivity(intent);
+//        });
 
 
-
+//        wid = Resources.getSystem().getDisplayMetrics().widthPixels;
+//        // Parce qu'intialement la view est -50dp en x
+//        fromX = -dpToPx(50);
+//
+//
+//        question1Titre = findViewById(R.id.question1Titre);
+//        img1 = findViewById(R.id.img1);
+//        img2 = findViewById(R.id.img2);
+//        btnArtist1 = findViewById(R.id.btnArtist1);
+//        btnArtist2 = findViewById(R.id.btnArtist2);
+//        drumSticks = findViewById(R.id.drumSticks);
+//
+//        ec = new Ecouteur();
+//        collectedResponse = new Vector<JSONObject>();
+//
+//        q1Url = new Question1Urls();
+//        Vector<String> vec;
+//        vec = q1Url.getVecUrlArtists();
+//        for (String url : vec) {
+//            GenericRequest request = new GenericRequest(this);
+//            request.createRequest(url);
+//        }
+//    }
+//
+//    public void getResponse(JSONObject response) {
+//        collectedResponse.add(response);
+//        // System.out.println(response.toString() + "\n");
+//        if (collectedResponse.size() == q1Url.getVecUrlArtists().size()) {
+//            afficherQuestion1(collectedResponse);
+//            btnArtist1.setOnClickListener(ec);
+//            btnArtist2.setOnClickListener(ec);
+//        }
+//    }
+//
+//    public void afficherQuestion1(Vector<JSONObject> collResp) {
+//        int lengthVec = q1Url.getVecUrlArtists().size();
+//        int index1 = (int) (Math.random() * lengthVec);
+//        int index2;
+//        do {
+//            index2 = (int) (Math.random() * lengthVec);
+//        } while (index1 == index2);
+//        sg = SingletonVolley.getInstance(this);
+//        JSONArray imageArr0 = null;
+//        JSONArray imageArr1 = null;
+//        try {
+//            imageArr0 = collResp.get(index1).getJSONArray("images");
+//            imageArr1 = collResp.get(index2).getJSONArray("images");
+//            int indexArr0 = (int) (Math.random() * imageArr0.length());
+//            int indexArr1 = (int) (Math.random() * imageArr1.length());
+//            JSONObject imageObj0 = imageArr0.getJSONObject(indexArr0);
+//            JSONObject imageObj1 = imageArr1.getJSONObject(indexArr1);
+//            String imageUrl1 = imageObj0.getString("url");
+//            String imageUrl2 = imageObj1.getString("url");
+//            imgLoader = sg.getImageLoader();
+//            img1.setImageUrl(imageUrl1, imgLoader);
+//            img2.setImageUrl(imageUrl2, imgLoader);
+//            String artist1 = collResp.get(index1).getString("name");
+//            String artist2 = collResp.get(index2).getString("name");
+//            btnArtist1.setText(artist1);
+//            btnArtist2.setText(artist2);
+//            popularity1 = collResp.get(index1).getInt("popularity");
+//            popularity2 = collResp.get(index2).getInt("popularity");
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static int dpToPx(int dp) {
+//        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+//    }
+//
+//    public void animateSticks() {
+//        toX = (float)((score - 1) * (wid / 10));
+//        ObjectAnimator anim = ObjectAnimator.ofFloat(drumSticks, View.X, fromX, toX);
+//        fromX = toX;
+//        anim.start();
+//    }
+//
+//    private class Ecouteur implements View.OnClickListener {
+//        @Override
+//        public void onClick(View v) {
+//            if ((v == btnArtist1 && popularity1 > popularity2) || (v == btnArtist2 && popularity1 < popularity2)) {
+//                Toast.makeText(MainActivity.this, "Bravo", Toast.LENGTH_SHORT).show();
+//                score++;
+//            } else {
+//                Toast.makeText(MainActivity.this, "Oups", Toast.LENGTH_SHORT).show();
+//            }
+//            if (score < 3) {
+//                afficherQuestion1(collectedResponse);
+//                animateSticks();
+//            } else {
+//                Intent intent = new Intent(MainActivity.this, Question2Activity.class);
+//                intent.putExtra("SCORE", score);
+//                intent.putExtra("FROM_X", fromX);
+//                intent.putExtra("TO_X", toX);
+//                startActivity(intent);
+//            }
+//        }
+//    }
     }
-    public void getResponse (JSONObject response) {
-        collectedResponse.add(response);
-        System.out.println(response.toString() + "\n");
-        if (collectedResponse.size() == 3) {
-            afficherImages(collectedResponse);
-        }
-    }
 
-    public void afficherImages (Vector<JSONObject> collResp) {
-        sg = SingletonVolley.getInstance(this);
-        JSONArray imageArr0 = null;
-        JSONArray imageArr1 = null;
-        try {
-            imageArr0 = collResp.get(0).getJSONArray("images");
-            imageArr1 = collResp.get(1).getJSONArray("images");
-            JSONObject imageObj0 = imageArr0.getJSONObject(0);
-            JSONObject imageObj1 = imageArr1.getJSONObject(0);
-            String imageUrl1 = imageObj0.getString("url");
-            String imageUrl2 = imageObj1.getString("url");
-            imgLoader = sg.getImageLoader();
-            img1.setImageUrl(imageUrl1, imgLoader);
-            img2.setImageUrl(imageUrl2, imgLoader);
-        } catch (JSONException e) {
-            e.printStackTrace();
+    private class Ecouteur implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MainActivity.this, Question1Activity.class);
+            intent.putExtra("SCORE", score);
+            intent.putExtra("FROM_X", fromX);
+            intent.putExtra("TO_X", toX);
+            startActivity(intent);
+
         }
     }
 }
 
-
-//        SharedPreferences shPref = getApplicationContext().getSharedPreferences("SPOTIFY", 0);
-
-
-//        sg = SingletonVolley.getInstance(this);
-//        imgLoader = sg.getImageLoader();
-//
-//        imageTest.setImageUrl(imageUrl, imgLoader);
-//
-//        JSONArray imageArr = null;
-//        try {
-//            imageArr = response.getJSONArray("images");
-//            JSONObject imageObj = imageArr.getJSONObject(0);
-//            imageUrl = imageObj.getString("url");
-//           // int width = imageObj.getInt("width");
-//           // int height = imageObj.getInt("height");
-//            imageTest.setImageUrl(imageUrl, imgLoader);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-
-
-
-//        jsonRequest = new JsonObjectRequest(
-//                Request.Method.GET,
-//                urlPavement,
-//                null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        System.out.println(response);
-//                        try {
-//                            JSONArray imageArr = response.getJSONArray("images");
-//                            JSONObject imageObj = imageArr.getJSONObject(0);
-//                            imageUrl = imageObj.getString("url");
-//
-//
-//                            int width = imageObj.getInt("width");
-//                            int height = imageObj.getInt("height");
-//
-//
-//                            imageTest.setImageUrl(imageUrl, imgLoader);
-//
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-////                          // JSONArray imagesArr = response.getJSONArray("images");
-//                    }
-//                }, null)
-//                {
-//                    @Override
-//                    public Map<String, String> getHeaders() throws AuthFailureError {
-//                        Map<String, String> headers = new HashMap<>();
-//                        Context sharedPreferences;
-//                        String token = shPref.getString("token", "");
-//                        String auth = "Bearer " + token;
-//                        headers.put("Authorization", auth);
-//                        headers.put("Content-Type", "application/json; charset=utf-8");
-//                        return headers;
-//                    }
-//                };

@@ -4,49 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/gray">
 
-    <TextView
-        android:id="@+id/champTest"
+    <Button
+        android:id="@+id/btnDemarrer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:text="Test for fun"
+        android:layout_marginBottom="72dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/permanent_marker"
+        android:text="Démarrer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:fontFamily="@font/permanent_marker"
+        android:text='Quiz sur la musique "grunge"'
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/imageTest"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="208dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="192dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="120dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/img1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/img2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
-
+        app:srcCompat="@drawable/grunge" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.c54tpfinal;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -21,11 +22,13 @@ import java.util.Map;
 public class GenericRequest{
 
     private JsonRequest jsonRequest;
-    private JSONObject jsonObjectResponse;
+    //  private JSONObject jsonObjectResponse;
     private Context context;
+    private int questionNum;
 
-    public GenericRequest(Context context) {
+    public GenericRequest(Context context, int questionNum) {
         this.context = context;
+        this.questionNum = questionNum;
     }
 
     public void createRequest(String url) {
@@ -36,7 +39,16 @@ public class GenericRequest{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response)  {
-                            ((MainActivity)context).getResponse(response);
+                        // System.out.println(response);
+                        if (questionNum == 1) {
+                            ((Question1Activity) context).getResponse(response);
+                        }
+                        else if (questionNum == 2) {
+                            ((Question2Activity) context).getResponse(response);
+                        }
+                        else {
+                            ((Question3Activity)context).getResponse(response);
+                        }
 //                        try {
 //                            String name = response.getString("name");
 //                        } catch (JSONException e) {

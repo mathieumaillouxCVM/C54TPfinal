@@ -31,7 +31,7 @@ import java.util.Vector;
 public class MainActivity extends AppCompatActivity {
 
     TextView champTest;
-    String urlPavement, urlNirvana, urlRadiohead, imageUrl;
+    String urlArtistPavement, urlArtistNirvana, urlArtistRadiohead, imageUrl;
     SingletonVolley sg;
     ImageLoader imgLoader;
     NetworkImageView img1, img2;
@@ -47,18 +47,18 @@ public class MainActivity extends AppCompatActivity {
                 img1 = findViewById(R.id.img1);
                 img2= findViewById(R.id.img2);
 
-                urlPavement = "https://api.spotify.com/v1/artists/3inCNiUr4R6XQ3W43s9Aqi";
-                urlNirvana = "https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb";
-                urlRadiohead = "https://api.spotify.com/v1/artists/6olE6TJLqED3rqDCT0FyPh";
+                urlArtistPavement = "https://api.spotify.com/v1/artists/3inCNiUr4R6XQ3W43s9Aqi";
+                urlArtistNirvana = "https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb";
+                urlArtistRadiohead = "https://api.spotify.com/v1/artists/6olE6TJLqED3rqDCT0FyPh";
 
                 collectedResponse = new Vector<JSONObject>();
 
                 GenericRequest requestPavement = new GenericRequest(this);
-                requestPavement.createRequest(urlPavement);
+                requestPavement.createRequest(urlArtistPavement);
                 GenericRequest requestNirvana = new GenericRequest(this);
-                requestNirvana.createRequest(urlNirvana);
+                requestNirvana.createRequest(urlArtistNirvana);
                 GenericRequest requestRadiohead = new GenericRequest(this);
-                requestRadiohead.createRequest(urlRadiohead);
+                requestRadiohead.createRequest(urlArtistRadiohead);
 
 
 

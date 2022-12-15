@@ -24,7 +24,7 @@ public class GenericRequest{
     private JsonRequest jsonRequest;
     //  private JSONObject jsonObjectResponse;
     private Context context;
-    private int questionNum;
+    private int questionNum = 0;
 
     public GenericRequest(Context context, int questionNum) {
         this.context = context;
@@ -46,7 +46,7 @@ public class GenericRequest{
                         else if (questionNum == 2) {
                             ((Question2Activity) context).getResponse(response);
                         }
-                        else {
+                        else if (questionNum == 3) {
                             ((Question3Activity)context).getResponse(response);
                         }
 //                        try {

@@ -19,20 +19,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Scanner;
 import java.util.Vector;
 
 public class Question2Activity extends AppCompatActivity {
 
     TextView question2Titre;
     ImageView drumSticks;
-    Button btnAlbum1, btnAlbum2;
+    Button btnAlbum1, btnAlbum2, btnAlbum3;
     SingletonVolley sg;
     ImageLoader imgLoader;
-    NetworkImageView imgAlbum1, imgAlbum2;
+    NetworkImageView imgAlbum;
     Vector<JSONObject> collectedResponse;
     Question2Urls q2Url;
     EcouteurQ2 ec2;
-    int popularity1, popularity2, score;
+    String answer;
+    int score;
     float wid, fromX, toX;
 
     @Override
@@ -40,31 +44,33 @@ public class Question2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question2);
 
+        Bundle b = getIntent().getExtras();
+        score = b.getInt("SCORE");
+        fromX = b.getFloat("FROM_X");
+        toX = b.getFloat("TO_X");
+        wid = b.getFloat("wid");
 
 
-    wid = Resources.getSystem().getDisplayMetrics().widthPixels;
-    // Parce qu'intialement la view est -50dp en x
-    fromX = -dpToPx(50);
+        question2Titre = findViewById(R.id.question2Titre);
+        imgAlbum = findViewById(R.id.imgAlbum);
+        btnAlbum1 = findViewById(R.id.btnAlbum1);
+        btnAlbum2 = findViewById(R.id.btnAlbum2);
+        btnAlbum3 = findViewById(R.id.btnAlbum3);
+        drumSticks = findViewById(R.id.drumSticks);
 
+        animateSticks();
 
-    question2Titre = findViewById(R.id.question2Titre);
-    imgAlbum1 = findViewById(R.id.imgAlbum1);
-    imgAlbum2 = findViewById(R.id.imgAlbum2);
-    btnAlbum1 = findViewById(R.id.btnAlbum1);
-    btnAlbum2 = findViewById(R.id.btnAlbum2);
-    drumSticks = findViewById(R.id.drumSticks);
+        ec2 = new EcouteurQ2();
+        collectedResponse = new Vector<JSONObject>();
 
-    ec2 = new EcouteurQ2();
-    collectedResponse = new Vector<JSONObject>();
-
-    q2Url = new Question2Urls();
-    Vector<String> vec;
-    vec = q2Url.getVecUrlAlbums();
-        for (String url : vec) {
-        GenericRequest request = new GenericRequest(this, 2);
-        request.createRequest(url);
+        q2Url = new Question2Urls();
+        Vector<String> vec;
+        vec = q2Url.getVecUrlAlbums();
+            for (String url : vec) {
+            GenericRequest request = new GenericRequest(this, 2);
+            request.createRequest(url);
+        }
     }
-}
 
     public void getResponse(JSONObject response) {
         collectedResponse.add(response);
@@ -73,40 +79,46 @@ public class Question2Activity extends AppCompatActivity {
             afficherQuestion2(collectedResponse);
             btnAlbum1.setOnClickListener(ec2);
             btnAlbum2.setOnClickListener(ec2);
+            btnAlbum3.setOnClickListener(ec2);
         }
     }
 
     public void afficherQuestion2(Vector<JSONObject> collResp) {
-        int lengthVec = q2Url.getVecUrlAlbums().size();
-        int index1 = (int) (Math.random() * lengthVec);
-        int index2;
-        do {
-            index2 = (int) (Math.random() * lengthVec);
-        } while (index1 == index2);
+        int artistIndex = (int) (Math.random() * q2Url.getVecUrlAlbums().size());
         sg = SingletonVolley.getInstance(this);
-        JSONArray imageArr0 = null;
-        JSONArray imageArr1 = null;
+        JSONArray imageArr = null;
         try {
-            imageArr0 = collResp.get(index1).getJSONArray("images");
-            imageArr1 = collResp.get(index2).getJSONArray("images");
-            int indexArr0 = (int) (Math.random() * imageArr0.length());
-            int indexArr1;
-            do {
-                indexArr1 = (int) (Math.random() * imageArr1.length());
-            } while (indexArr0 == indexArr1);
-            JSONObject imageObj0 = imageArr0.getJSONObject(indexArr0);
-            JSONObject imageObj1 = imageArr1.getJSONObject(indexArr1);
-            String imageUrl1 = imageObj0.getString("url");
-            String imageUrl2 = imageObj1.getString("url");
+            JSONArray albumArray = collResp.get(artistIndex).getJSONArray("items");
+            Vector<Integer> albumIndex = new Vector<>();
+            for (int i = 0; i < albumArray.length(); i++) {
+                albumIndex.add(i);
+            }
+            Collections.shuffle(albumIndex);
+            JSONObject albumAnswer = albumArray.getJSONObject(albumIndex.get(0));
+            JSONObject album1 = albumArray.getJSONObject(albumIndex.get(1));
+            JSONObject album2 = albumArray.getJSONObject(albumIndex.get(2));
+
+            imageArr = albumAnswer.getJSONArray("images");
+            JSONObject imageJObj = imageArr.getJSONObject(0);
+            String imageUrl = imageJObj.getString("url");
             imgLoader = sg.getImageLoader();
-            imgAlbum1.setImageUrl(imageUrl1, imgLoader);
-            imgAlbum2.setImageUrl(imageUrl2, imgLoader);
-            String artist1 = collResp.get(index1).getString("name");
-            String artist2 = collResp.get(index2).getString("name");
-            btnAlbum1.setText(artist1);
-            btnAlbum2.setText(artist2);
-            popularity1 = collResp.get(index1).getInt("popularity");
-            popularity2 = collResp.get(index2).getInt("popularity");
+            imgAlbum.setImageUrl(imageUrl, imgLoader);
+
+            String answerDate = albumAnswer.getString("release_date");
+            answer = answerDate;
+            String album1Date = album1.getString("release_date");
+            String album2Date = album2.getString("release_date");
+
+            Vector<String> answersStr = new Vector<>();
+            answersStr.add(answerDate);
+            answersStr.add(album1Date);
+            answersStr.add(album2Date);
+
+            Collections.shuffle(answersStr);
+
+            btnAlbum1.setText(answersStr.get(0));
+            btnAlbum2.setText(answersStr.get(1));
+            btnAlbum3.setText(answersStr.get(2));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -124,25 +136,28 @@ public class Question2Activity extends AppCompatActivity {
         anim.start();
     }
 
-private class EcouteurQ2 implements View.OnClickListener {
-    @Override
-    public void onClick(View v) {
-        if ((v == btnAlbum1 && popularity1 > popularity2) || (v == btnAlbum2 && popularity1 < popularity2)) {
-            Toast.makeText(Question2Activity.this, "Bravo", Toast.LENGTH_SHORT).show();
-            score++;
-        } else {
-            Toast.makeText(Question2Activity.this, "Oups", Toast.LENGTH_SHORT).show();
-        }
-        if (score < 3) {
-            afficherQuestion2(collectedResponse);
-            animateSticks();
-        } else {
-            Intent intent = new Intent(Question2Activity.this, Question3Activity.class);
-            intent.putExtra("SCORE", score);
-            intent.putExtra("FROM_X", fromX);
-            intent.putExtra("TO_X", toX);
-            startActivity(intent);
+    private class EcouteurQ2 implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Button b = (Button) v;
+            if (b.getText().toString().equals(answer)) {
+                Toast.makeText(Question2Activity.this, "Bravo", Toast.LENGTH_SHORT).show();
+                score++;
+            } else {
+                Toast.makeText(Question2Activity.this, "Oups", Toast.LENGTH_SHORT).show();
+            }
+
+            if (score < 6) {
+                afficherQuestion2(collectedResponse);
+                animateSticks();
+            } else {
+                Intent intent = new Intent(Question2Activity.this, Question3Activity.class);
+                intent.putExtra("SCORE", score);
+                intent.putExtra("FROM_X", fromX);
+                intent.putExtra("TO_X", toX);
+                intent.putExtra("WID", wid);
+                startActivity(intent);
+            }
         }
     }
-}
 }

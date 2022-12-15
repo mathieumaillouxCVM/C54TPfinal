@@ -12,13 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
+        android:autoText="false"
+        android:elegantTextHeight="true"
         android:fontFamily="@font/permanent_marker"
         android:includeFontPadding="true"
-        android:text="Quel album est le plus populaire"
+        android:text="Quelle est la date de parution de cet album ?"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,18 +34,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/imgAlbum1"
+            android:id="@+id/imgAlbum"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="12dp" />
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/imgAlbum2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="12dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -66,7 +62,7 @@
             android:backgroundTint="@color/black"
             android:fontFamily="@font/permanent_marker"
             android:text="album1"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnAlbum2"
@@ -79,7 +75,18 @@
             android:backgroundTint="@color/black"
             android:fontFamily="@font/permanent_marker"
             android:text="album2"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnAlbum3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/permanent_marker"
+            android:text="album3"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

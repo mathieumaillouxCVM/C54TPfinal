@@ -67,7 +67,7 @@ public class Question1Activity extends AppCompatActivity {
 
     public void getResponse(JSONObject response) {
         collectedResponse.add(response);
-        // System.out.println(response.toString() + "\n");
+        System.out.println(response.toString());
         if (collectedResponse.size() == q1Url.getVecUrlArtists().size()) {
             afficherQuestion1(collectedResponse);
             btnArtist1.setOnClickListener(ec1);
@@ -140,6 +140,7 @@ public class Question1Activity extends AppCompatActivity {
                 intent.putExtra("SCORE", score);
                 intent.putExtra("FROM_X", fromX);
                 intent.putExtra("TO_X", toX);
+                intent.putExtra("WID", wid);
                 startActivity(intent);
             }
         }

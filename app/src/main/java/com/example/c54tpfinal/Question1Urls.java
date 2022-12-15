@@ -19,6 +19,7 @@ public class Question1Urls {
         vecUrlArtists.add("https://api.spotify.com/v1/artists/5SHQUMAmEK5KmuSb0aDvsn");
         vecUrlArtists.add("https://api.spotify.com/v1/artists/2zMQOJ4Cyl4BYbw6WqaO3h");
         vecUrlArtists.add("https://api.spotify.com/v1/artists/267VY6GX5LyU5c9M85ECZQ");
+        vecUrlArtists.add("https://api.spotify.com/v1/artists/1xgFexIwrf2QjbU0buCNnp");
     }
     public Vector<String> getVecUrlArtists() {
         return this.vecUrlArtists;

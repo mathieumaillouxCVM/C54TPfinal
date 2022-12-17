@@ -59,10 +59,10 @@ public class Question1Activity extends AppCompatActivity {
         q1Url = new Question1Urls_old();
         Vector<String> vec;
         vec = q1Url.getVecUrlArtists();
-        for (String url : vec) {
+        /*for (String url : vec) {
             GenericRequest request = new GenericRequest(this, 1);
             request.createRequest(url);
-        }
+        }*/
     }
 
     public void getResponse(JSONObject response) {
@@ -76,7 +76,7 @@ public class Question1Activity extends AppCompatActivity {
     }
 
     public void afficherQuestion1(Vector<JSONObject> collResp) {
-        int lengthVec = q1Url.getVecUrlArtists().size();
+        /*int lengthVec = q1Url.getVecUrlArtists().size();
         int index1 = (int) (Math.random() * lengthVec);
         int index2;
         do {
@@ -109,8 +109,9 @@ public class Question1Activity extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
+
 
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);

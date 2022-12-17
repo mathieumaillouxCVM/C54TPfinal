@@ -54,17 +54,37 @@ public class Question1Activity extends AppCompatActivity {
         drumSticks = findViewById(R.id.drumSticks);
 
         ec1 = new EcouteurQ1();
+
+        btnArtist1.setOnClickListener(ec1);
+        btnArtist2.setOnClickListener(ec1);
+
+        btnArtist1.setEnabled(false);
+        btnArtist2.setEnabled(false);
+
+        // Cette objet sera dans les classes "Question#"
+        // respectives et sera utilisé afin d'extraire et de fabriquer les
+        // données pour l'affichage de la question dans la vue.
+
+        /*
         collectedResponse = new Vector<JSONObject>();
 
         q1Url = new Question1Urls_old();
         Vector<String> vec;
         vec = q1Url.getVecUrlArtists();
-        /*for (String url : vec) {
+        for (String url : vec) {
             GenericRequest request = new GenericRequest(this, 1);
             request.createRequest(url);
         }*/
     }
 
+    Question1 question1 = new Question1(this);
+    // Créer méthode dans la classe question qui fera un appel dans l'activité
+    // pour activer les boutons
+    public void activateBtns() {
+        btnArtist1.setEnabled(true);
+        btnArtist2.setEnabled(true);
+    }
+    /*
     public void getResponse(JSONObject response) {
         collectedResponse.add(response);
         System.out.println(response.toString());
@@ -74,7 +94,7 @@ public class Question1Activity extends AppCompatActivity {
             btnArtist2.setOnClickListener(ec1);
         }
     }
-
+*/
     public void afficherQuestion1(Vector<JSONObject> collResp) {
         /*int lengthVec = q1Url.getVecUrlArtists().size();
         int index1 = (int) (Math.random() * lengthVec);

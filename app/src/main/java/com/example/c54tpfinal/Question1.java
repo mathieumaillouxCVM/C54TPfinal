@@ -10,8 +10,9 @@ import java.util.Vector;
 
 public class Question1 {
 
-    private final Vector<String> vecUrlArtists;
     private Context context;
+    private final Vector<String> vecUrlArtists;
+    private Vector<JSONObject> collectedResponse;
 
     public Question1(Context context) {
         this.context = context;
@@ -28,7 +29,7 @@ public class Question1 {
         vecUrlArtists.add("https://api.spotify.com/v1/artists/2zMQOJ4Cyl4BYbw6WqaO3h");
         vecUrlArtists.add("https://api.spotify.com/v1/artists/267VY6GX5LyU5c9M85ECZQ");
         vecUrlArtists.add("https://api.spotify.com/v1/artists/1xgFexIwrf2QjbU0buCNnp");
-
+        this.collectedResponse = null;
         for (String url : vecUrlArtists) {
             GenericRequest request = new GenericRequest(context, 1);
             request.createRequest(url);
@@ -47,8 +48,8 @@ public class Question1 {
         JSONArray imageArr0 = null;
         JSONArray imageArr1 = null;
         try {
-            imageArr0 = collResp.get(index1).getJSONArray("images");
-            imageArr1 = collResp.get(index2).getJSONArray("images");
+            imageArr0 = this.collectedResponse.get(index1).getJSONArray("images");
+            imageArr1 = this.collectedResponse.get(index2).getJSONArray("images");
             int indexArr0 = (int) (Math.random() * imageArr0.length());
             int indexArr1;
             do {
@@ -58,6 +59,10 @@ public class Question1 {
             JSONObject imageObj1 = imageArr1.getJSONObject(indexArr1);
             String imageUrl1 = imageObj0.getString("url");
             String imageUrl2 = imageObj1.getString("url");
+
+            // Partie à laisser dans la vue dans une méthode afficherQuestion
+
+            /*
             imgLoader = sg.getImageLoader();
             imgArtist1.setImageUrl(imageUrl1, imgLoader);
             imgArtist2.setImageUrl(imageUrl2, imgLoader);
@@ -67,14 +72,19 @@ public class Question1 {
             btnArtist2.setText(artist2);
             popularity1 = collResp.get(index1).getInt("popularity");
             popularity2 = collResp.get(index2).getInt("popularity");
-
+*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public Vector<String> getVecUrlArtists() {
-        return this.vecUrlArtists;
-    }
 
+    public void getResponse(JSONObject response) {
+        this.collectedResponse.add(response);
+        System.out.println(response.toString());
+        if (this.collectedResponse.size() == vecUrlArtists.size()) {
+            Question1Activity question1Activity = (Question1Activity) context;
+            question1Activity.activateBtns();
+        }
+    }
 }

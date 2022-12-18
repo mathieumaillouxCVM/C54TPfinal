@@ -65,11 +65,11 @@ public class Question2Activity extends AppCompatActivity {
 
         q2Url = new Question2Urls();
         Vector<String> vec;
-        vec = q2Url.getVecUrlAlbums();
+        /*vec = q2Url.getVecUrlAlbums();
             for (String url : vec) {
             GenericRequest request = new GenericRequest(this, 2);
             request.createRequest(url);
-        }
+        }*/
     }
 
     public void getResponse(JSONObject response) {
@@ -84,6 +84,11 @@ public class Question2Activity extends AppCompatActivity {
     }
 
     public void afficherQuestion2(Vector<JSONObject> collResp) {
+        // Utiliser un scanner ou split sur la date et avec un Gregorian Calendar bâtir
+        // 2 autres dates (peut-être récupérer seulement l'année et faire un randomize dans un autour
+        // Utiliser un vecteur avec des dates de 1988 à 2001 faire choix dessus.
+
+
         int artistIndex = (int) (Math.random() * q2Url.getVecUrlAlbums().size());
         sg = SingletonVolley.getInstance(this);
         JSONArray imageArr = null;

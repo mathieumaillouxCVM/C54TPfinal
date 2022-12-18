@@ -40,8 +40,8 @@ public class Question3Activity extends AppCompatActivity {
         albumsUrls = new AlbumUrls();
         Vector<String> vec;
         vec = albumsUrls.getVecUrlAlbums();
-        GenericRequest request = new GenericRequest(this, 3);
-        request.createRequest(vec.get(0));
+        // GenericRequest request = new GenericRequest(this, 3);
+        // request.createRequest(vec.get(0));
     }
 
     public void getResponse(JSONObject response) {
@@ -56,6 +56,10 @@ public class Question3Activity extends AppCompatActivity {
     }
 
     public void afficherQuestion3(Vector<JSONObject> callResp) {
+        // Sortir le nom d'une tracks sur différents albums de façon aléatoire
+        // L'utilisateur doit choisir la track vient de quel album
+        // ou quelle track est sur cet album.
+
         Gson gson = new GsonBuilder().create();
         Album album = gson.fromJson(String.valueOf(callResp.get(0)), Album.class);
         ListeTracks tracks = album.getTracks();

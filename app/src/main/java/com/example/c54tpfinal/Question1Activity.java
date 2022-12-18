@@ -80,6 +80,7 @@ public class Question1Activity extends AppCompatActivity {
     Question1 question1 = new Question1(this);
     // Créer méthode dans la classe question qui fera un appel dans l'activité
     // pour activer les boutons
+
     public void activateBtns() {
         btnArtist1.setEnabled(true);
         btnArtist2.setEnabled(true);

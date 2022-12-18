@@ -31,8 +31,8 @@ public class Question1 {
         vecUrlArtists.add("https://api.spotify.com/v1/artists/1xgFexIwrf2QjbU0buCNnp");
         this.collectedResponse = null;
         for (String url : vecUrlArtists) {
-            GenericRequest request = new GenericRequest(context, 1);
-            request.createRequest(url);
+            GenericRequest request = new GenericRequest(context);
+            request.createRequest(url, this);
         }
 
 }

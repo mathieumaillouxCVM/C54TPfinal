@@ -29,15 +29,15 @@ public class Question1 {
         vecUrlArtists.add("https://api.spotify.com/v1/artists/2zMQOJ4Cyl4BYbw6WqaO3h");
         vecUrlArtists.add("https://api.spotify.com/v1/artists/267VY6GX5LyU5c9M85ECZQ");
         vecUrlArtists.add("https://api.spotify.com/v1/artists/1xgFexIwrf2QjbU0buCNnp");
-        this.collectedResponse = null;
+        collectedResponse = new Vector<JSONObject>();
         for (String url : vecUrlArtists) {
-            GenericRequest request = new GenericRequest(context);
+            GenericRequest request = GenericRequest.getInstance(context);
             request.createRequest(url, this);
         }
-
-}
+    }
 
     public void generateQuestion1() {
+        Vector<Object> data = new Vector<>();
         int sizeVec = vecUrlArtists.size();
         int index1 = (int) (Math.random() * sizeVec);
         int index2;
@@ -48,31 +48,37 @@ public class Question1 {
         JSONArray imageArr0 = null;
         JSONArray imageArr1 = null;
         try {
-            imageArr0 = this.collectedResponse.get(index1).getJSONArray("images");
-            imageArr1 = this.collectedResponse.get(index2).getJSONArray("images");
-            int indexArr0 = (int) (Math.random() * imageArr0.length());
-            int indexArr1;
-            do {
-                indexArr1 = (int) (Math.random() * imageArr1.length());
-            } while (indexArr0 == indexArr1);
-            JSONObject imageObj0 = imageArr0.getJSONObject(indexArr0);
-            JSONObject imageObj1 = imageArr1.getJSONObject(indexArr1);
+            imageArr0 = collectedResponse.get(index1).getJSONArray("images");
+            imageArr1 = collectedResponse.get(index2).getJSONArray("images");
+//            int indexArr0 = (int) (Math.random() * imageArr0.length());
+//            int indexArr1;
+//            do {
+//                indexArr1 = (int) (Math.random() * imageArr1.length());
+//            } while (indexArr0 == indexArr1);
+            JSONObject imageObj0 = imageArr0.getJSONObject(0);
+            JSONObject imageObj1 = imageArr1.getJSONObject(0);
             String imageUrl1 = imageObj0.getString("url");
             String imageUrl2 = imageObj1.getString("url");
 
             // Partie à laisser dans la vue dans une méthode afficherQuestion
 
-            /*
-            imgLoader = sg.getImageLoader();
-            imgArtist1.setImageUrl(imageUrl1, imgLoader);
-            imgArtist2.setImageUrl(imageUrl2, imgLoader);
-            String artist1 = collResp.get(index1).getString("name");
-            String artist2 = collResp.get(index2).getString("name");
-            btnArtist1.setText(artist1);
-            btnArtist2.setText(artist2);
-            popularity1 = collResp.get(index1).getInt("popularity");
-            popularity2 = collResp.get(index2).getInt("popularity");
-*/
+
+//            imgLoader = sg.getImageLoader();
+//            imgArtist1.setImageUrl(imageUrl1, imgLoader);
+//            imgArtist2.setImageUrl(imageUrl2, imgLoader);
+            String artist1 = collectedResponse.get(index1).getString("name");
+            String artist2 = collectedResponse.get(index2).getString("name");
+//            btnArtist1.setText(artist1);
+//            btnArtist2.setText(artist2);
+            int popularity1 = collectedResponse.get(index1).getInt("popularity");
+            int popularity2 = collectedResponse.get(index2).getInt("popularity");
+            data.add(imageUrl1);
+            data.add(imageUrl2);
+            data.add(artist1);
+            data.add(artist2);
+            data.add(popularity1);
+            data.add(popularity2);
+            ((Question1Activity)context).afficherQuestion1(data);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,11 +86,12 @@ public class Question1 {
 
 
     public void getResponse(JSONObject response) {
-        this.collectedResponse.add(response);
+        collectedResponse.add(response);
         System.out.println(response.toString());
-        if (this.collectedResponse.size() == vecUrlArtists.size()) {
+        if (collectedResponse.size() == vecUrlArtists.size()) {
             Question1Activity question1Activity = (Question1Activity) context;
             question1Activity.activateBtns();
+            generateQuestion1();
         }
     }
 }

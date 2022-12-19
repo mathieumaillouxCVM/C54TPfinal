@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private class Ecouteur implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(MainActivity.this, Question3Activity.class);
+            Intent intent = new Intent(MainActivity.this, Question1Activity.class);
             intent.putExtra("SCORE", score);
             intent.putExtra("FROM_X", fromX);
             intent.putExtra("TO_X", toX);

@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import java.util.Vector;
 
-public class Question3Activity extends AppCompatActivity {
+public class  Question3Activity extends AppCompatActivity {
 
     AlbumUrls albumsUrls;
     Vector<JSONObject> collectedResponse;

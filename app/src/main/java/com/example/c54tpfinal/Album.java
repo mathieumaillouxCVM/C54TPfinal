@@ -12,6 +12,7 @@ import java.util.List;
 public class Album {
     ListeTracks tracks;
     List<Artist> artists;
+    List<Image> images;
     String release_date;
     int popularity;
     int total_tracks;
@@ -21,13 +22,11 @@ public class Album {
         artists = new ArrayList<Artist>();
     }
 
-    public Artist getArtist(){
-        return artists.get(0);
-    }
+    public ListeTracks getTracks() { return tracks; }
 
-    public ListeTracks getTracks() {
-        return tracks;
-    }
+    public Artist getArtist(){ return artists.get(0); }
+
+    public Image getImages(int i) { return images.get(i); }
 
     public String getRelease_date() {
         return release_date;

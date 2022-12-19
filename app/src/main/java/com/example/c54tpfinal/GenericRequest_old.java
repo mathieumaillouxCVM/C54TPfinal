@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GenericRequest{
+public class GenericRequest_old {
 
     // Créer les objets des questions ici afin des les avoir accessibles pour les
     // pour le retour des infos sinon mieux, passer l'objet en argument dans
@@ -22,23 +22,9 @@ public class GenericRequest{
 
 
     //  private JSONObject jsonObjectResponse;
-    private static GenericRequest instance;
     private Context context;
 
-    private GenericRequest(Context context) {
-        this.context = context;
-    }
-
-    public static GenericRequest getInstance(Context context) {
-        if (instance == null) {
-            instance = new GenericRequest(context);
-        } else {
-            instance.setContext(context);
-        }
-        return instance;
-    }
-
-    public void setContext(Context context) {
+    public GenericRequest_old(Context context) {
         this.context = context;
     }
 
@@ -64,14 +50,24 @@ public class GenericRequest{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println(response);
+                        // System.out.println(response);
                         if (object instanceof Question1) {
-                            ((Question1)object).getResponse(response);
-                        } else if (object instanceof Question2) {
-                            ((Question2) object).getResponse(response);
-                        } else if (object instanceof Question3) {
-                            ((Question3) object).getResponse(response);
+                            ((Question1) object).getResponse(response);
+
                         }
+                        /*else if (object instanceof Question2) {
+                            ((Question2Activity)context).getResponse(response);
+                        }
+                        else if (object instanceof Question3) {
+                            ((Question3Activity)context).getResponse(response);
+                        }*/
+//                        try {
+//                            String name = response.getString("name");
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        System.out.println(response); // For test in console
+//                        jsonObjectResponse = response;
                     }
                 }, null) {
             @Override
@@ -88,4 +84,15 @@ public class GenericRequest{
         };
         SingletonVolley.getInstance(context).addToRequestQueue(jsonRequest);
     }
+
+
+//
+//    public JsonRequest getJsonRequest() {
+//        return jsonRequest;
+//    }
+//
+//    public JSONObject getJsonObjectResponse() {
+//        return jsonObjectResponse;
+//    }
+
 }

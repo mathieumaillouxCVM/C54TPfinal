@@ -5,10 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Collections;
 import java.util.Vector;
 
@@ -17,6 +14,7 @@ public class Question2 {
     private Context context;
     private final Vector<String> vecUrlAlbums;
     private Vector<JSONObject> collectedResponse;
+    private Vector<Integer> years;
 
     public Question2(Context context) {
         this.context = context;
@@ -64,6 +62,10 @@ public class Question2 {
             GenericRequest request = GenericRequest.getInstance(context);
             request.createRequest(url, this);
         }
+        years = new Vector<Integer>();
+        for (int i = 1987; i < 2003; i++) {
+            years.add(i);
+        }
     }
 
     public void generateQuestion2() {
@@ -76,20 +78,28 @@ public class Question2 {
         Collections.shuffle(indexAlbums);
 
         Gson gson = new GsonBuilder().create();
-        Album albumAnswer = gson.fromJson(String.valueOf(collectedResponse.get(indexAlbums.get(0))), Album.class);
-        Image image = albumAnswer.getImages(0);
+        GSONAlbum albumAnswer = gson.fromJson(String.valueOf(collectedResponse.get(indexAlbums.get(0))),GSONAlbum.class);
+        GSONAlbum.Image image = albumAnswer.getImages(0);
         imageUrl = image.getUrl();
-        Album album2 = gson.fromJson(String.valueOf(collectedResponse.get(indexAlbums.get(1))), Album.class);
-        Album album3 = gson.fromJson(String.valueOf(collectedResponse.get(indexAlbums.get(2))), Album.class);
-        String albumAnswerDate = albumAnswer.getRelease_date();
-        String album2Date = album2.getRelease_date();
-        String album3Date = album3.getRelease_date();
+//        GSONAlbum album2 = gson.fromJson(String.valueOf(collectedResponse.get(indexAlbums.get(1))),GSONAlbum.class);
+//        GSONAlbum album3 = gson.fromJson(String.valueOf(collectedResponse.get(indexAlbums.get(2))),GSONAlbum.class);
+        String date = albumAnswer.getRelease_date();
+//        String album2Date = album2.getRelease_date();
+//        String album3Date = album3.getRelease_date();
 
+        String[] dateSplit = date.split("-");
+        String answer = dateSplit[0];
+        String date2, date3;
+        do {
+            Collections.shuffle(years);
+            date2 = String.valueOf(years.get(0));
+            date3 = String.valueOf(years.get(1));
+        } while (date2.equals(answer) || date3.equals(answer));
 
 //            ListeTracks tracks = album.getTracks();
 //            Track track = tracks.get(0);
 //            Artist artist = album.getArtist();
-        System.out.println(album2.getRelease_date());
+//        System.out.println(album2.getRelease_date());
 //            System.out.println(track.getName());
 //            System.out.println(artist.getName());
 //
@@ -118,9 +128,9 @@ public class Question2 {
 
 //            Vector<String> answersStr = new Vector<>();
         data.add(imageUrl);
-        data.add(albumAnswerDate);
-        data.add(album2Date);
-        data.add(album3Date);
+        data.add(answer);
+        data.add(date2);
+        data.add(date3);
 
 //            Collections.shuffle(answersStr);
 //

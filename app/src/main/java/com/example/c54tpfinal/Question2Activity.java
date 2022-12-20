@@ -4,24 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Scanner;
 import java.util.Vector;
 
 public class Question2Activity extends AppCompatActivity {
@@ -29,12 +25,14 @@ public class Question2Activity extends AppCompatActivity {
     TextView question2Titre;
     ImageView drumSticks;
     Button btnAlbum1, btnAlbum2, btnAlbum3;
+    ListView liste;
 //    SingletonVolley sg;
     ImageLoader imgLoader;
     NetworkImageView imgAlbum;
 //    Vector<JSONObject> collectedResponse;
     Question2 question2;
     EcouteurQ2 ec2;
+    ArrayAdapter vectorAdapter;
     String answer, date2, date3, imgUrl;
     int score;
     float wid, fromX, toX;
@@ -53,20 +51,24 @@ public class Question2Activity extends AppCompatActivity {
 
         question2Titre = findViewById(R.id.question2Titre);
         imgAlbum = findViewById(R.id.imgAlbum);
-        btnAlbum1 = findViewById(R.id.btnAlbum1);
-        btnAlbum2 = findViewById(R.id.btnAlbum2);
-        btnAlbum3 = findViewById(R.id.btnAlbum3);
+        liste = findViewById(R.id.liste);
+//        btnAlbum1 = findViewById(R.id.btnAlbum1);
+//        btnAlbum2 = findViewById(R.id.btnAlbum2);
+//        btnAlbum3 = findViewById(R.id.btnAlbum3);
         drumSticks = findViewById(R.id.drumSticks);
 
         ec2 = new EcouteurQ2();
 
-        btnAlbum1.setOnClickListener(ec2);
-        btnAlbum2.setOnClickListener(ec2);
-        btnAlbum3.setOnClickListener(ec2);
+        liste.setOnItemClickListener((AdapterView.OnItemClickListener) ec2);
+        liste.setEnabled(false);
 
-        btnAlbum1.setEnabled(false);
-        btnAlbum2.setEnabled(false);
-        btnAlbum3.setEnabled(false);
+//        btnAlbum1.setOnClickListener(ec2);
+//        btnAlbum2.setOnClickListener(ec2);
+//        btnAlbum3.setOnClickListener(ec2);
+//
+//        btnAlbum1.setEnabled(false);
+//        btnAlbum2.setEnabled(false);
+//        btnAlbum3.setEnabled(false);
 
         animateSticks();
 
@@ -85,9 +87,10 @@ public class Question2Activity extends AppCompatActivity {
     }
 
     public void activateBtns() {
-        btnAlbum1.setEnabled(true);
-        btnAlbum2.setEnabled(true);
-        btnAlbum3.setEnabled(true);
+//        btnAlbum1.setEnabled(true);
+//        btnAlbum2.setEnabled(true);
+//        btnAlbum3.setEnabled(true);
+        liste.setEnabled(true);
     }
 
 
@@ -136,6 +139,8 @@ public class Question2Activity extends AppCompatActivity {
             shuffledVec.add(date2);
             shuffledVec.add(date3);
 
+            vectorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shuffledVec);
+            liste.setAdapter(vectorAdapter);
             Collections.shuffle(shuffledVec);
 
 
@@ -143,7 +148,6 @@ public class Question2Activity extends AppCompatActivity {
 
             // imgLoader = sg.getImageLoader();
             imgAlbum.setImageUrl(imgUrl, imgLoader);
-
 //            String answerDate = albumAnswer.getString("release_date");
 //            answer = answerDate;
 //            String album1Date = album1.getString("release_date");
@@ -156,9 +160,9 @@ public class Question2Activity extends AppCompatActivity {
 
 //            Collections.shuffle(answersStr);
 
-            btnAlbum1.setText(shuffledVec.get(0));
-            btnAlbum2.setText(shuffledVec.get(1));
-            btnAlbum3.setText(shuffledVec.get(2));
+//            btnAlbum1.setText(shuffledVec.get(0));
+//            btnAlbum2.setText(shuffledVec.get(1));
+//            btnAlbum3.setText(shuffledVec.get(2));
 
 //        } catch (JSONException e) {
 //            e.printStackTrace();
@@ -176,11 +180,11 @@ public class Question2Activity extends AppCompatActivity {
         anim.start();
     }
 
-    private class EcouteurQ2 implements View.OnClickListener {
+    private class EcouteurQ2 implements AdapterView.OnItemClickListener {
+
         @Override
-        public void onClick(View v) {
-            Button b = (Button) v;
-            if (b.getText().toString().equals(answer)) {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (vectorAdapter.getItem(position).equals(answer)) {
                 Toast.makeText(Question2Activity.this, "Bravo", Toast.LENGTH_SHORT).show();
                 score++;
             } else {
@@ -199,4 +203,28 @@ public class Question2Activity extends AppCompatActivity {
             }
         }
     }
+
+//    private class EcouteurQ2  {
+//        @Override
+//        public void onListItemClick(View v) {
+//            Button b = (Button) v;
+//            if (v.getText().toString().equals(answer)) {
+//                Toast.makeText(Question2Activity.this, "Bravo", Toast.LENGTH_SHORT).show();
+//                score++;
+//            } else {
+//                Toast.makeText(Question2Activity.this, "Oups", Toast.LENGTH_SHORT).show();
+//            }
+//            if (score < 6) {
+//                question2.generateQuestion2();
+//                animateSticks();
+//            } else {
+//                Intent intent = new Intent(Question2Activity.this, Question3Activity.class);
+//                intent.putExtra("SCORE", score);
+//                intent.putExtra("FROM_X", fromX);
+//                intent.putExtra("TO_X", toX);
+//                intent.putExtra("WID", wid);
+//                startActivity(intent);
+//            }
+//        }
+//    }
 }

@@ -9,14 +9,15 @@
 
     <TextView
         android:id="@+id/question2Titre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_width="401dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="4dp"
         android:autoText="false"
         android:elegantTextHeight="true"
-        android:fontFamily="@font/permanent_marker"
+        android:fontFamily="@font/bangers"
+        android:gravity="center"
         android:includeFontPadding="true"
-        android:text="Quelle est la date de parution de cet album ?"
+        android:text="Quelle est l'année de parution de cet album ?"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -25,9 +26,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="120dp"
+        android:layout_width="416dp"
+        android:layout_height="203dp"
+        android:layout_marginTop="80dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,63 +43,29 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="120dp"
-        android:orientation="horizontal"
+    <ListView
+        android:id="@+id/liste"
+        android:layout_width="413dp"
+        android:layout_height="229dp"
+        android:layout_marginBottom="88dp"
+        android:foregroundGravity="center"
+        android:textFilterEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/btnAlbum1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/black"
-            android:fontFamily="@font/permanent_marker"
-            android:text="album1"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnAlbum2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/black"
-            android:fontFamily="@font/permanent_marker"
-            android:text="album2"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnAlbum3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/black"
-            android:fontFamily="@font/permanent_marker"
-            android:text="album3"
-            android:textSize="14sp" />
-
-    </LinearLayout>
+    </ListView>
 
     <ImageView
         android:id="@+id/drumSticks"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/drumsticks"
         android:translationX="-50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/shoes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

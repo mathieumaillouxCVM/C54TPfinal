@@ -9,7 +9,6 @@ import android.widget.Button;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Vector;
@@ -26,7 +25,7 @@ public class  Question3Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question3);
+        setContentView(R.layout.activity_question3_oldy);
 
         Bundle b = getIntent().getExtras();
         score = b.getInt("SCORE");
@@ -62,9 +61,9 @@ public class  Question3Activity extends AppCompatActivity {
 
         Gson gson = new GsonBuilder().create();
         Album album = gson.fromJson(String.valueOf(callResp.get(0)), Album.class);
-        ListeTracks tracks = album.getTracks();
-        Track track = tracks.get(0);
-        Artist artist = album.getArtist();
+        ListeTracks_old tracks = album.getTracks();
+        Track_old track = tracks.get(0);
+        Artist_old artist = album.getArtist();
         System.out.println(album.getRelease_date());
         System.out.println(track.getName());
         System.out.println(artist.getName());

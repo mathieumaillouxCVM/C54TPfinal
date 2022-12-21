@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("FROM_X", fromX);
             intent.putExtra("TO_X", toX);
             startActivity(intent);
-
         }
     }
 }

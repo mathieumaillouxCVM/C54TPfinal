@@ -2,17 +2,23 @@ package com.example.c54tpfinal;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
 import java.util.Vector;
 
 public class Question1 {
 
     private Context context;
-    private final Vector<String> vecUrlArtists;
     private Vector<JSONObject> collectedResponse;
+    private final Vector<String> vecUrlArtists;
+    private Vector<Integer> indexArtists;
+    private Gson gson;
 
     public Question1(Context context) {
         this.context = context;
@@ -34,56 +40,59 @@ public class Question1 {
             GenericRequest request = GenericRequest.getInstance(context);
             request.createRequest(url, this);
         }
+        indexArtists = new Vector<>();
+        remplirIndex();
+    }
+
+    public void remplirIndex() {
+        for (int i = 0; i < vecUrlArtists.size(); i++){
+            indexArtists.add(i);
+        }
+        Collections.shuffle(vecUrlArtists);
     }
 
     public void generateQuestion1() {
         Vector<Object> data = new Vector<>();
-        int sizeVec = vecUrlArtists.size();
-        int index1 = (int) (Math.random() * sizeVec);
-        int index2;
-        do {
-            index2 = (int) (Math.random() * sizeVec);
-        } while (index1 == index2);
-        SingletonVolley sg = SingletonVolley.getInstance((Question1Activity)context);
-        JSONArray imageArr0 = null;
-        JSONArray imageArr1 = null;
-        try {
-            imageArr0 = collectedResponse.get(index1).getJSONArray("images");
-            imageArr1 = collectedResponse.get(index2).getJSONArray("images");
-//            int indexArr0 = (int) (Math.random() * imageArr0.length());
-//            int indexArr1;
-//            do {
-//                indexArr1 = (int) (Math.random() * imageArr1.length());
-//            } while (indexArr0 == indexArr1);
-            JSONObject imageObj0 = imageArr0.getJSONObject(0);
-            JSONObject imageObj1 = imageArr1.getJSONObject(0);
-            String imageUrl1 = imageObj0.getString("url");
-            String imageUrl2 = imageObj1.getString("url");
+        if (indexArtists.size() == 0) {
+            remplirIndex();
+        }
+        int index1 = indexArtists.remove(0);
+        int index2 = indexArtists.remove(0);
 
-            // Partie à laisser dans la vue dans une méthode afficherQuestion
-
-
-//            imgLoader = sg.getImageLoader();
-//            imgArtist1.setImageUrl(imageUrl1, imgLoader);
-//            imgArtist2.setImageUrl(imageUrl2, imgLoader);
-            String artist1 = collectedResponse.get(index1).getString("name");
-            String artist2 = collectedResponse.get(index2).getString("name");
-//            btnArtist1.setText(artist1);
-//            btnArtist2.setText(artist2);
-            int popularity1 = collectedResponse.get(index1).getInt("popularity");
-            int popularity2 = collectedResponse.get(index2).getInt("popularity");
+        gson = new GsonBuilder().create();
+        GSONArtist artist1 = gson.fromJson(String.valueOf(collectedResponse.get(index1)), GSONArtist.class);
+        GSONArtist artist2 = gson.fromJson(String.valueOf(collectedResponse.get(index2)), GSONArtist.class);
+        String imageUrl1 = artist1.getImages(0).getUrl();
+        String imageUrl2 = artist2.getImages(0).getUrl();
+        String name1 = artist1.name;
+        String name2 = artist2.name;
+        int popularity1 = artist1.popularity;
+        int popularity2 = artist2.popularity;
+//        SingletonVolley sg = SingletonVolley.getInstance((Question1Activity)context);
+//        JSONArray imageArr0 = null;
+//        JSONArray imageArr1 = null;
+//        try {
+//            imageArr0 = collectedResponse.get(index1).getJSONArray("images");
+//            imageArr1 = collectedResponse.get(index2).getJSONArray("images");
+//            JSONObject imageObj0 = imageArr0.getJSONObject(0);
+//            JSONObject imageObj1 = imageArr1.getJSONObject(0);
+//            String imageUrl1 = imageObj0.getString("url");
+//            String imageUrl2 = imageObj1.getString("url");
+//            String artist1 = collectedResponse.get(index1).getString("name");
+//            String artist2 = collectedResponse.get(index2).getString("name");
+//            int popularity1 = collectedResponse.get(index1).getInt("popularity");
+//            int popularity2 = collectedResponse.get(index2).getInt("popularity");
             data.add(imageUrl1);
             data.add(imageUrl2);
-            data.add(artist1);
-            data.add(artist2);
+            data.add(name1);
+            data.add(name2);
             data.add(popularity1);
             data.add(popularity2);
             ((Question1Activity)context).afficherQuestion1(data);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
-
 
     public void getResponse(JSONObject response) {
         collectedResponse.add(response);

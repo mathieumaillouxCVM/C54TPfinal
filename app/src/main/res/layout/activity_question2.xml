@@ -8,10 +8,9 @@
     tools:context=".Question2Activity">
 
     <TextView
-        android:id="@+id/question2Titre"
-        android:layout_width="401dp"
+        android:id="@+id/question2Titre2"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="4dp"
         android:autoText="false"
         android:elegantTextHeight="true"
         android:fontFamily="@font/bangers"
@@ -26,46 +25,101 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="416dp"
-        android:layout_height="203dp"
+        android:layout_width="412dp"
+        android:layout_height="250dp"
         android:layout_marginTop="80dp"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imgAlbum"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:layout_weight="1"
             android:padding="12dp" />
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/liste"
-        android:layout_width="413dp"
-        android:layout_height="229dp"
-        android:layout_marginBottom="88dp"
-        android:foregroundGravity="center"
-        android:textFilterEnabled="false"
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="120dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
-    </ListView>
+        <Button
+            android:id="@+id/btnDate1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/bangers"
+            android:text="date1"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnDate2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/bangers"
+            android:text="date2"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnDate3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/bangers"
+            android:text="date3"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="351dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="340dp">
+
+        <TextView
+            android:id="@+id/albumTitre"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/bangers"
+            android:gravity="center"
+            android:text="Album" />
+
+    </LinearLayout>
 
     <ImageView
-        android:id="@+id/drumSticks"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/drumsticks"
-        android:translationX="-50dp"
+        android:id="@+id/shoes"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/shoes"
+        android:translationX="-60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@drawable/shoes" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

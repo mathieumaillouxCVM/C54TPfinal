@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/question3Titre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:autoText="false"
         android:elegantTextHeight="true"
-        android:fontFamily="@font/permanent_marker"
+        android:fontFamily="@font/bangers"
+        android:gravity="center"
         android:includeFontPadding="true"
         android:text="Quelle pièce ne figure pas sur cet album ?"
         android:textAlignment="center"
@@ -27,8 +27,8 @@
 
     <LinearLayout
         android:layout_width="409dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="120dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="70dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
     <ListView
         android:id="@+id/liste"
         android:layout_width="match_parent"
-        android:layout_height="126dp"
+        android:layout_height="200dp"
         android:layout_marginBottom="108dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,14 +56,26 @@
     </ListView>
 
     <ImageView
-        android:id="@+id/drumSticks"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/drumsticks"
-        android:translationX="-50dp"
+        android:id="@+id/shoes"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/shoes"
+        android:translationX="-60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAccueil"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/bangers"
+        android:text="Accueil"
+        android:textSize="20sp"
+        android:translationX="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

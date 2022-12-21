@@ -2,6 +2,7 @@ package com.example.c54tpfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,28 +16,19 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Vector;
 
 public class Question1Activity extends AppCompatActivity {
 
     TextView question1Titre;
-    ImageView drumSticks;
+    ImageView shoes;
     Button btnArtist1, btnArtist2;
-    SingletonVolley sg;
     ImageLoader imgLoader;
     NetworkImageView imgArtist1, imgArtist2;
-//    Vector<JSONObject> collectedResponse;
-    Vector<Object> data;
-//    Question1Urls_old q1Url;
     Question1 question1;
     EcouteurQ1 ec1;
     String imageUrl1, imageUrl2, artist1, artist2;
     int popularity1, popularity2, score;
-
     float wid, fromX, toX;
 
     @Override
@@ -44,19 +36,17 @@ public class Question1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question1);
 
-        // sg = SingletonVolley.getInstance(this);
-
+        score = 0;
         wid = Resources.getSystem().getDisplayMetrics().widthPixels;
         // Parce qu'intialement la view est -50dp en x
         fromX = -dpToPx(50);
-
 
         question1Titre = findViewById(R.id.question1Titre);
         imgArtist1 = findViewById(R.id.imgArtist1);
         imgArtist2 = findViewById(R.id.imgArtist2);
         btnArtist1 = findViewById(R.id.btnArtist1);
         btnArtist2 = findViewById(R.id.btnArtist2);
-        drumSticks = findViewById(R.id.drumSticks);
+        shoes = findViewById(R.id.shoes);
 
         ec1 = new EcouteurQ1();
 
@@ -66,42 +56,28 @@ public class Question1Activity extends AppCompatActivity {
         btnArtist1.setEnabled(false);
         btnArtist2.setEnabled(false);
 
-        // Cette objet sera dans les classes "Question#"
-        // respectives et sera utilisé afin d'extraire et de fabriquer les
-        // données pour l'affichage de la question dans la vue.
-
-        /*
-        collectedResponse = new Vector<JSONObject>();
-
-        q1Url = new Question1Urls_old();
-        Vector<String> vec;
-        vec = q1Url.getVecUrlArtists();
-        for (String url : vec) {
-            GenericRequest request = new GenericRequest(this, 1);
-            request.createRequest(url);
-        }*/
         question1 = new Question1(this);
-        // question1.generateQuestion1();
     }
-
-    // Créer méthode dans la classe question qui fera un appel dans l'activité
-    // pour activer les boutons
 
     public void activateBtns() {
         btnArtist1.setEnabled(true);
         btnArtist2.setEnabled(true);
     }
-    /*
-    public void getResponse(JSONObject response) {
-        collectedResponse.add(response);
-        System.out.println(response.toString());
-        if (collectedResponse.size() == q1Url.getVecUrlArtists().size()) {
-            afficherQuestion1(collectedResponse);
-            btnArtist1.setOnClickListener(ec1);
-            btnArtist2.setOnClickListener(ec1);
-        }
+
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
-*/
+
+    public void animateShoes() {
+        toX = (float)((score - 1) * (wid / 10));
+        ObjectAnimator animX = ObjectAnimator.ofFloat(shoes, View.X, fromX, toX);
+        ObjectAnimator animRotate = ObjectAnimator.ofFloat(shoes, View.ROTATION_X, 0f, 360f);
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(animX, animRotate);
+        fromX = toX;
+        set.start();
+    }
+
     public void afficherQuestion1(Vector<Object> data) {
         imageUrl1 = (String)data.get(0);
         imageUrl2 = (String)data.get(1);
@@ -109,52 +85,13 @@ public class Question1Activity extends AppCompatActivity {
         artist2 = (String)data.get(3);
         popularity1 = (Integer) data.get(4);
         popularity2 = (Integer)data.get(5);
-//        int lengthVec = q1Url.getVecUrlArtists().size();
-//        int index1 = (int) (Math.random() * lengthVec);
-//        int index2;
-//        do {
-//            index2 = (int) (Math.random() * lengthVec);
-//        } while (index1 == index2);
-//        sg = SingletonVolley.getInstance(this);
-//        JSONArray imageArr0 = null;
-//        JSONArray imageArr1 = null;
-//        try {
-//            imageArr0 = collResp.get(index1).getJSONArray("images");
-//            imageArr1 = collResp.get(index2).getJSONArray("images");
-//            int indexArr0 = (int) (Math.random() * imageArr0.length());
-//            int indexArr1;
-//            do {
-//                indexArr1 = (int) (Math.random() * imageArr1.length());
-//            } while (indexArr0 == indexArr1);
-//            JSONObject imageObj0 = imageArr0.getJSONObject(indexArr0);
-//            JSONObject imageObj1 = imageArr1.getJSONObject(indexArr1);
-//            String imageUrl1 = imageObj0.getString("url");
-//            String imageUrl2 = imageObj1.getString("url");
-            imgLoader = SingletonVolley.getInstance(this).getImageLoader();
-            imgArtist1.setImageUrl(imageUrl1, imgLoader);
-            imgArtist2.setImageUrl(imageUrl2, imgLoader);
-//            String artist1 = collResp.get(index1).getString("name");
-//            String artist2 = collResp.get(index2).getString("name");
-            btnArtist1.setText(artist1);
-            btnArtist2.setText(artist2);
-//            popularity1 = collResp.get(index1).getInt("popularity");
-//            popularity2 = collResp.get(index2).getInt("popularity");
 
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-    }
+        imgLoader = SingletonVolley.getInstance(this).getImageLoader();
+        imgArtist1.setImageUrl(imageUrl1, imgLoader);
+        imgArtist2.setImageUrl(imageUrl2, imgLoader);
 
-
-    public static int dpToPx(int dp) {
-        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
-    }
-
-    public void animateSticks() {
-        toX = (float)((score - 1) * (wid / 8));
-        ObjectAnimator anim = ObjectAnimator.ofFloat(drumSticks, View.X, fromX, toX);
-        fromX = toX;
-        anim.start();
+        btnArtist1.setText(artist1);
+        btnArtist2.setText(artist2);
     }
 
     private class EcouteurQ1 implements View.OnClickListener {
@@ -166,10 +103,9 @@ public class Question1Activity extends AppCompatActivity {
             } else {
                 Toast.makeText(Question1Activity.this, "Oups", Toast.LENGTH_SHORT).show();
             }
-            if (score < 3) {
+            if (score < 2) {
                 question1.generateQuestion1();
-//                afficherQuestion1(data);
-                animateSticks();
+                animateShoes();
             } else {
                 Intent intent = new Intent(Question1Activity.this, Question2Activity.class);
                 intent.putExtra("SCORE", score);

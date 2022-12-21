@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GSONAlbum {
+    String name;
     ListeTracks tracks;
     List<Artist> artists;
     List<Image> images;
@@ -15,6 +16,8 @@ public class GSONAlbum {
         artists = new ArrayList<Artist>();
         images = new ArrayList<Image>();
     }
+
+    public String getName() { return  name; }
 
     public ListeTracks getTracks() { return tracks; }
 
@@ -37,9 +40,11 @@ public class GSONAlbum {
 
     public class ListeTracks {
         List<Track> items;
+
         public ListeTracks() {
             items = new ArrayList<Track>();
         }
+
         public Track get(int i){
             return items.get(i);
         }
@@ -64,14 +69,13 @@ public class GSONAlbum {
         public String getName() {
             return name;
         }
-
     }
 
     public class Image {
         String url;
+
         public String getUrl() {
             return url;
         }
-
     }
 }

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.Vector;
 
+// Similaire à la classe Question2 (je m'abstiendrai de recommenter les méthodes identiques)
 public class Question3 {
 
     private Context context;
@@ -96,7 +97,6 @@ public class Question3 {
         data.add(titre3);
 
         ((Question3Activity)context).afficherQuestion3(data);
-
     }
 
     public void getResponse(JSONObject response) {
@@ -108,5 +108,4 @@ public class Question3 {
             generateQuestion3();
         }
     }
-
 }

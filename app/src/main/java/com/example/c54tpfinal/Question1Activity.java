@@ -53,9 +53,12 @@ public class Question1Activity extends AppCompatActivity {
         btnArtist1.setOnClickListener(ec1);
         btnArtist2.setOnClickListener(ec1);
 
+        // Les boutons sont désactivés jusqu'à ce que l'ensemble des requêtes soient
+        // complétés afin de bâtir les questions.
         btnArtist1.setEnabled(false);
         btnArtist2.setEnabled(false);
 
+        // Objet question1 instancié (modèle)
         question1 = new Question1(this);
     }
 
@@ -68,11 +71,13 @@ public class Question1Activity extends AppCompatActivity {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
+    // Méthode appelée lorsqu'une bonne réponse est donnée
     public void animateShoes() {
         toX = (float)((score - 1) * (wid / 10));
         ObjectAnimator animX = ObjectAnimator.ofFloat(shoes, View.X, fromX, toX);
-        ObjectAnimator animRotate = ObjectAnimator.ofFloat(shoes, View.ROTATION_X, 0f, 360f);
+        ObjectAnimator animRotate = ObjectAnimator.ofFloat(shoes, View.ROTATION, 0f, 360f);
         AnimatorSet set = new AnimatorSet();
+        set.setDuration(1000);
         set.playTogether(animX, animRotate);
         fromX = toX;
         set.start();
@@ -95,18 +100,26 @@ public class Question1Activity extends AppCompatActivity {
     }
 
     private class EcouteurQ1 implements View.OnClickListener {
+        // Vérification de la réponse donnée par l'utilisateur à la question.  Plus simple de référer
+        // directement sur les données récupérées ici (en partie pour l'affichage)
+        // que de les laisser dans le modèle, du moins pour la question présente (popularité).
+
         @Override
         public void onClick(View v) {
             if ((v == btnArtist1 && popularity1 > popularity2) || (v == btnArtist2 && popularity1 < popularity2)) {
                 Toast.makeText(Question1Activity.this, "Bravo", Toast.LENGTH_SHORT).show();
                 score++;
+                animateShoes();
             } else {
                 Toast.makeText(Question1Activity.this, "Oups", Toast.LENGTH_SHORT).show();
             }
             if (score < 2) {
                 question1.generateQuestion1();
-                animateShoes();
             } else {
+                // Lorsque 2 bonnes réponses ont été données, la position des "shoes" de l'animation
+                // est passée dans l'extra de l'intent avec le score pour qu'ils soient au bon endroit
+                // dans la prochaine activité.  L'animation pour la bonne réponse aura lieu dans la
+                // prochaine activité.
                 Intent intent = new Intent(Question1Activity.this, Question2Activity.class);
                 intent.putExtra("SCORE", score);
                 intent.putExtra("FROM_X", fromX);

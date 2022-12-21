@@ -55,16 +55,20 @@ public class  Question3Activity extends AppCompatActivity {
         imgAlbum = findViewById(R.id.imgAlbum);
         liste = findViewById(R.id.liste);
         shoes = findViewById(R.id.shoes);
+        // Utilsation d'une lambda parce que ce bouton apparaît uniquement lorsque le quiz est
+        // terminé afin de retourner à l'accueil
         btnAccueil = findViewById(R.id.btnAccueil);
         btnAccueil.setOnClickListener( btnAccueil -> {
                 Intent intent = new Intent(Question3Activity.this, MainActivity.class);
                 startActivity(intent);
         });
 
+        // On anime les "shoes" selon le score obtenu en terminant l'activité précédente
         animateShoes();
 
         ec3 = new EcouteurQ3();
 
+        // Utilisation d'une liste pour le choix de réponse avec l'adapteur correspondant.
         liste.setOnItemClickListener((AdapterView.OnItemClickListener) ec3);
         liste.setEnabled(false);
 
@@ -89,12 +93,12 @@ public class  Question3Activity extends AppCompatActivity {
         imgLoader = SingletonVolley.getInstance(this).getImageLoader();
         imgAlbum.setImageUrl(imgUrl, imgLoader);
 
+        // On mélange les données envoyées par le modèle afin que la bonne réponse
+        // ne se trouve pas toujours au même endroit dans la liste
         Vector<String> shuffledVec = new Vector<>();
-
         shuffledVec.add(answer);
         shuffledVec.add(titre2);
         shuffledVec.add(titre3);
-
         Collections.shuffle(shuffledVec);
 
         vectorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shuffledVec);
@@ -102,12 +106,18 @@ public class  Question3Activity extends AppCompatActivity {
     }
 
     public void animateShoes() {
-        toX = (float) (score * (wid / 10));
-        ObjectAnimator anim = ObjectAnimator.ofFloat(shoes, View.X, fromX, toX);
+        toX = (float)((score - 1) * (wid / 10));
+        ObjectAnimator animX = ObjectAnimator.ofFloat(shoes, View.X, fromX, toX);
+        ObjectAnimator animRotate = ObjectAnimator.ofFloat(shoes, View.ROTATION, 0f, 360f);
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(1000);
+        set.playTogether(animX, animRotate);
         fromX = toX;
-        anim.start();
+        set.start();
     }
 
+    // Animation spécifique lorsque le quiz est complété afin de faire appraître le bouton de retour
+    // à l'accueil.
     public void animateEnd() {
         AnimatorSet set1 = new AnimatorSet();
         AnimatorSet set2 = new AnimatorSet();
@@ -131,14 +141,14 @@ public class  Question3Activity extends AppCompatActivity {
             if (parent.getItemAtPosition(position).toString().equals(answer)) {
                 Toast.makeText(Question3Activity.this, "Bravo", Toast.LENGTH_SHORT).show();
                 score++;
+                animateShoes();
             } else {
                 Toast.makeText(Question3Activity.this, "Oups", Toast.LENGTH_SHORT).show();
             }
             if  (score < 6) {
                 question3.generateQuestion3();
-                animateShoes();
             } else {
-                Toast.makeText(Question3Activity.this, "Bravo, vous avez complété le quiz!!!"
+                Toast.makeText(Question3Activity.this, "Vous avez complété le quiz!!!"
                         , Toast.LENGTH_SHORT).show();
                 liste.setEnabled(false);
                 animateEnd();

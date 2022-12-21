@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.Vector;
 
+// Similaire à la classe Question1 (je m'abstiendrai de recommenter les méthodes identiques)
 public class Question2 {
 
     private Context context;
@@ -64,6 +65,9 @@ public class Question2 {
             GenericRequest request = GenericRequest.getInstance(context);
             request.createRequest(url, this);
         }
+        // Je rajoute un vecteur contenant une plage d'années disponibles.  C'est pour éviter
+        // d'utiliser l'année d'autres albums qui auraient pu être identiques à celle de celui
+        // dont je présente la pochette.
         years = new Vector<Integer>();
         for (int i = 1987; i < 2003; i++) {
             years.add(i);
@@ -85,6 +89,8 @@ public class Question2 {
         String answer = null;
         String titre = null;
         GSONAlbum albumAnswer;
+        // Je fais un do while afin de retirer les albums qui seraient trop récents (malgré l'info
+        // sur le site de spotify, j'ai eu de mauvaises surprises avec certains albums "remastérisés" récents.
         do {
             if (indexAlbums.size() == 0) {
                 remplirIndex();
@@ -92,10 +98,11 @@ public class Question2 {
             gson = new GsonBuilder().create();
             albumAnswer = gson.fromJson(String.valueOf(collectedResponse.get(indexAlbums.remove(0))), GSONAlbum.class);
             String date = albumAnswer.getRelease_date();
+            // Je conserve seulement l'année
             String[] dateSplit = date.split("-");
             answer = dateSplit[0];
             titre = albumAnswer.getName();
-        } while (Integer.parseInt(answer) >= 2003); // Filtrer certains albums "reissue" trop récents
+        } while (Integer.parseInt(answer) >= 2003); // Filtrer certains albums "remastérisés" récents
         GSONAlbum.Image image = albumAnswer.getImages(0);
         imageUrl = image.getUrl();
 
@@ -119,7 +126,6 @@ public class Question2 {
         collectedResponse.add(response);
         System.out.println(response.toString());
         if (collectedResponse.size() == vecUrlAlbums.size()) {
-
             Question2Activity question2Activity = (Question2Activity) context;
             question2Activity.activateBtns();
             generateQuestion2();

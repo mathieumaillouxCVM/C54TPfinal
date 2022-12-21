@@ -89,6 +89,8 @@
         android:layout_height="60dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/shoes"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         android:translationX="-60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

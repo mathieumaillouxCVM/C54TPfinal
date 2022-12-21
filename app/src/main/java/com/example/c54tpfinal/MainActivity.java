@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Utile dans l'éventualité que le joueur veuille refaire le quiz
         score = 0;
         fromX = 0;
         toX = 0;

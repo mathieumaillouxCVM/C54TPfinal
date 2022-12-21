@@ -20,7 +20,7 @@ public class IdentActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1338;
  
-  private static final String SCOPES = "user-read-recently-played";
+    private static final String SCOPES = "user-read-recently-played";
     private SharedPreferences.Editor editor;
     private SharedPreferences msharedPreferences;
 

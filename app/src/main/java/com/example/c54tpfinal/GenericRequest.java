@@ -16,12 +16,9 @@ import java.util.Map;
 
 public class GenericRequest{
 
-    // Créer les objets des questions ici afin des les avoir accessibles pour les
-    // pour le retour des infos sinon mieux, passer l'objet en argument dans
-    // la méthode createRequest
+    // Classe GenericRequest en singleton étant donné qu'une seule requête peut être faite
+    // à la fois.  La méthode createRequest est appelé à l'instanciation de la
 
-
-    //  private JSONObject jsonObjectResponse;
     private static GenericRequest instance;
     private Context context;
 
@@ -32,31 +29,11 @@ public class GenericRequest{
     public static GenericRequest getInstance(Context context) {
         if (instance == null) {
             instance = new GenericRequest(context);
-        } else {
-            instance.setContext(context);
         }
-        return instance;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
+            return instance;
     }
 
     public void createRequest(String url, Object object) {
-        // System.out.println(response);
-        /*else if (object instanceof Question2) {
-                            ((Question2Activity)context).getResponse(response);
-                        }
-                        else if (object instanceof Question3) {
-                            ((Question3Activity)context).getResponse(response);
-                        }*/
-        //                        try {
-        //                            String name = response.getString("name");
-        //                        } catch (JSONException e) {
-        //                            e.printStackTrace();
-        //                        }
-        //                        System.out.println(response); // For test in console
-        //                        jsonObjectResponse = response;
         JsonRequest<JSONObject> jsonRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 url,

@@ -3,6 +3,8 @@ package com.example.c54tpfinal;
 import java.util.ArrayList;
 import java.util.List;
 
+// Classe GSONAlbum pour décortiquer les reponses revenant l'API concernant les albums
+
 public class GSONAlbum {
     String name;
     ListeTracks tracks;

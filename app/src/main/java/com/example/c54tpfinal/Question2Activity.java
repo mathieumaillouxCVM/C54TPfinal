@@ -36,6 +36,8 @@ public class Question2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question2);
 
+        // Récupération des données de l'extra de l'intent pour le positionnement des "shoes"
+        // ainsi que le score
         Bundle b = getIntent().getExtras();
         score = b.getInt("SCORE");
         fromX = b.getFloat("FROM_X");
@@ -49,6 +51,8 @@ public class Question2Activity extends AppCompatActivity {
         btnDate3 = findViewById(R.id.btnDate3);
         shoes = findViewById(R.id.shoes);
 
+        // Les "shoes" s'animent pour la bonne réponse ayant eu lieu en terminant la dernière
+        // activité
         animateShoes();
 
         ec2 = new EcouteurQ2();
@@ -73,8 +77,9 @@ public class Question2Activity extends AppCompatActivity {
     public void animateShoes() {
         toX = (float)((score - 1) * (wid / 10));
         ObjectAnimator animX = ObjectAnimator.ofFloat(shoes, View.X, fromX, toX);
-        ObjectAnimator animRotate = ObjectAnimator.ofFloat(shoes, View.ROTATION_X, 0f, 360f);
+        ObjectAnimator animRotate = ObjectAnimator.ofFloat(shoes, View.ROTATION, 0f, 360f);
         AnimatorSet set = new AnimatorSet();
+        set.setDuration(1000);
         set.playTogether(animX, animRotate);
         fromX = toX;
         set.start();
@@ -111,12 +116,12 @@ public class Question2Activity extends AppCompatActivity {
             if (b.getText().toString().equals(answer)) {
                 Toast.makeText(Question2Activity.this, "Bravo", Toast.LENGTH_SHORT).show();
                 score++;
+                animateShoes();
             } else {
                 Toast.makeText(Question2Activity.this, "Oups", Toast.LENGTH_SHORT).show();
             }
             if (score < 4) {
                 question2.generateQuestion2();
-                animateShoes();
             } else {
                 Intent intent = new Intent(Question2Activity.this, Question3Activity.class);
                 intent.putExtra("SCORE", score);
